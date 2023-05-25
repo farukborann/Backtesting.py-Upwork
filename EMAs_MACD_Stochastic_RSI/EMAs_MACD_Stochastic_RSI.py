@@ -28,26 +28,23 @@ class EMAs_MACD_Stochastic_RSI(Strategy):
         is_rsi_avaialable = self.rsi[-1] < 30
 
         if(is_stochastic_available and is_ema_available and is_macd_available and is_rsi_avaialable):
-            self.buy(sl=self.data.Close[-1] - 10)
+            self.buy(size=1)
         elif(self.position and self.rsi[-1] > 70):
-            self.sell()
+            self.sell(size=-1)
             
         return
 
-    # def 
 
-# data = pd.read_csv(f'./BTCUSDT-1m-2023-05-22.csv')
-# data = pd.read_csv(f'./BTCUSDT-3m-2023-05-22.csv')
-# data = pd.read_csv(f'./BTCUSDT-5m-2023-05-22.csv')
-# data['Timestamp'] = pd.to_datetime(data['Timestamp'], unit='ms')
+# data = pd.read_csv(f'./Datasets/BTCUSDT-1m-2023-05-22.csv') # 1
+# data = pd.read_csv(f'./Datasets/BTCUSDT-3m-2023-05-22.csv') # 2
+# data = pd.read_csv(f'./Datasets/BTCUSDT-5m-2023-05-22.csv') # 3
+data = pd.read_csv(f'./Datasets/BTCUSDT-4h-2018-2022.csv') # 4
 
-# data = pd.read_csv(f'./BTCUSDT-4h-2018-2022.csv')
-# data['Timestamp'] = pd.to_datetime(data['Timestamp'], unit='s')
+data['Timestamp'] = pd.to_datetime(data['Timestamp'], unit='ms')
+data.set_index('Timestamp', inplace=True) # Set datetime as index column
+data = (data / 1e6).assign(Volume=data.Volume * 1e6) # BTC to uBTC for trading
 
-# data.set_index('Timestamp', inplace=True)
-# print(data)
-
-backtest = Backtest(GOOG, EMAs_MACD_Stochastic_RSI, trade_on_close=True, exclusive_orders=True)
+backtest = Backtest(data, EMAs_MACD_Stochastic_RSI, trade_on_close=True, exclusive_orders=True)
 result=backtest.run()
 
 res_file = open('result.txt', 'w')
