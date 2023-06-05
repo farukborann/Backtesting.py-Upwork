@@ -1,10 +1,9 @@
 from backtesting import Backtest, Strategy
 from backtesting.lib import crossover
-# from backtesting.test import GOOG # Test data
 import pandas as pd
 import talib as ta
 
-class Death_Cross(Strategy):
+class Golden_Cross(Strategy):
     def init(self):
         close_series = self.data.Close.to_series()
 
@@ -13,9 +12,9 @@ class Death_Cross(Strategy):
 
     def next(self):
         if(crossover(self.sma_200, self.sma_50) and self.position):
-            self.buy(size=1)
-        elif(crossover(self.sma_50, self.sma_200)):
             self.buy(size=-1)
+        elif(crossover(self.sma_50, self.sma_200)):
+            self.buy(size=1)
             
         return
 
@@ -27,9 +26,8 @@ data = pd.read_csv(f'./Datasets/BTCUSDT-4h-2018-2022.csv') # 4
 
 data['Timestamp'] = pd.to_datetime(data['Timestamp'], unit='ms')
 data.set_index('Timestamp', inplace=True) # Set datetime as index column
-data = (data / 1e6).assign(Volume=data.Volume * 1e6) # BTC to uBTC for trading
 
-backtest = Backtest(data, Death_Cross)
+backtest = Backtest(data, Golden_Cross)
 result=backtest.run()
 
 res_file = open('result.txt', 'w')

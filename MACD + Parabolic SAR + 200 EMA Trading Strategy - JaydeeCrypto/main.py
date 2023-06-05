@@ -4,7 +4,6 @@ import pandas as pd
 import talib as ta
 
 class MACD_SAR_EMA(Strategy):
-
     def init(self):
         high_series = self.data.High.to_series()
         low_series = self.data.Low.to_series()

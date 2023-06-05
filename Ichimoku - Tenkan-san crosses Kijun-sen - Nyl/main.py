@@ -80,9 +80,8 @@ data = pd.read_csv(f'./Datasets/BTCUSDT-4h-2018-2022.csv', sep=',') # 4
 
 data['Timestamp'] = pd.to_datetime(data['Timestamp'], unit='ms')
 data.set_index('Timestamp', inplace=True) # Set datetime as index column
-# data['Volume'] = data['Volume'] * 1e2 # Fix volume column
 
-backtest = Backtest(data, IchimokuTenkanCrossKijun)
+backtest = Backtest(data, IchimokuTenkanCrossKijun, trade_on_close=True)
 result=backtest.run()
 
 res_file = open('result.txt', 'w')

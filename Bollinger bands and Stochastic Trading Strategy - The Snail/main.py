@@ -58,7 +58,6 @@ data = pd.read_csv(f'./Datasets/BTCUSDT-1m-2023-05-22.csv') # 1
 
 data['Timestamp'] = pd.to_datetime(data['Timestamp'], unit='ms')
 data.set_index('Timestamp', inplace=True) # Set datetime as index column
-# data['Volume'] = data['Volume'] * 1e2 # Fix volume column
 
 backtest = Backtest(data, BBandsAndStochastic, cash=100_000)
 result=backtest.run()
