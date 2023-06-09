@@ -75,13 +75,13 @@ class IchimokuTenkanCrossKijun(Strategy):
 
 # data = pd.read_csv(f'./Datasets/BTCUSDT-1m-2023-05-22.csv') # 1
 # data = pd.read_csv(f'./Datasets/BTCUSDT-3m-2023-05-22.csv') # 2
-# data = pd.read_csv(f'./Datasets/BTCUSDT-5m-2023-05-22.csv') # 3
-data = pd.read_csv(f'./Datasets/BTCUSDT-4h-2018-2022.csv', sep=',') # 4
+data = pd.read_csv(f'./Datasets/BTCUSDT-5m-2023-05-22.csv') # 3
+# data = pd.read_csv(f'./Datasets/BTCUSDT-4h-2018-2022.csv', sep=',') # 4
 
 data['Timestamp'] = pd.to_datetime(data['Timestamp'], unit='ms')
 data.set_index('Timestamp', inplace=True) # Set datetime as index column
 
-backtest = Backtest(data, IchimokuTenkanCrossKijun, trade_on_close=True)
+backtest = Backtest(data, IchimokuTenkanCrossKijun, trade_on_close=True, cash=100_000)
 result=backtest.run()
 
 res_file = open('result.txt', 'w')

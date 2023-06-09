@@ -20,10 +20,10 @@ class MACD_SAR_EMA(Strategy):
             self.buy(size=-1)
         pass
 
-data = pd.read_csv(f'./Datasets/BTCUSDT-1m-2023-05-22.csv') # 1
+# data = pd.read_csv(f'./Datasets/BTCUSDT-1m-2023-05-22.csv') # 1
 # data = pd.read_csv(f'./Datasets/BTCUSDT-3m-2023-05-22.csv') # 2
 # data = pd.read_csv(f'./Datasets/BTCUSDT-5m-2023-05-22.csv') # 3
-# data = pd.read_csv(f'./Datasets/BTCUSDT-4h-2018-2022.csv') # 4
+data = pd.read_csv(f'./Datasets/BTCUSDT-4h-2018-2022.csv') # 4
 
 data['Timestamp'] = pd.to_datetime(data['Timestamp'], unit='ms')
 data.set_index('Timestamp', inplace=True) # Set datetime as index column
